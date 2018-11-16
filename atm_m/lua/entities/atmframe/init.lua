@@ -47,7 +47,7 @@ net.Receive("ATM::GiveOrRetryMoney::2d3d",function(_,ply)
 	local bool = net.ReadBool()
 	local money = net.ReadFloat()
 
-	if money < 0 then return end
+	if money < 0 or #tostring(money) > 8 or not IsValid(net.ReadEntity()) then return end
 	if not IsValid(ply) then return end
 
 	if bool then
