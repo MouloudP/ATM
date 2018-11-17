@@ -296,7 +296,7 @@ net.Receive("ATM::OpenMenu::2d3d",function()
       draw.RoundedBox(6, 0, 0, w, h, Color(107, 126, 255))
       draw.RoundedBox(6, w/300, h/165, w/1.007, h/1.012, Color(255, 255, 255, 255))
       draw.DrawText("Distributeur", "FontATM2D3D1", w/2, h/100, Color(107, 126, 255), TEXT_ALIGN_CENTER)
-      draw.DrawText("En Banque : " .. money .. "$", "FontATM2D3D1", w/2, h/5, Color(107, 126, 255), TEXT_ALIGN_CENTER)
+      draw.DrawText("En Banque : " .. LocalPlayer():GetMoneyATM() .. "$", "FontATM2D3D1", w/2, h/5, Color(107, 126, 255), TEXT_ALIGN_CENTER)
 
   end
 
@@ -364,11 +364,8 @@ net.Receive("ATM::OpenMenu::2d3d",function()
 
   local pos = ent:GetPos() + ent:GetUp() * 6.5 + ent:GetForward() * 35 + ent:GetRight() * -35
   local ang = ent:GetAngles()
-  local ang = Angle(0,ang.y + 90,0)
 
-  ang:RotateAroundAxis( ang:Up(), 0 )
-
-  ang:RotateAroundAxis( ang:Forward() * -1, -90 )
+  ang:RotateAroundAxis( ang:Up(), 270 )
 
   hook.Add( "PostDrawOpaqueRenderables", "PostDrawOpaqueRenderables::ATMOpenMenu", function()
 
@@ -555,11 +552,8 @@ function functi.MenuKeypad(bool, ent)
 
   local pos = ent:GetPos() + ent:GetUp() * 6.5 + ent:GetForward() * 35 + ent:GetRight() * -35
   local ang = ent:GetAngles()
-  local ang = Angle(0,ang.y + 90,0)
 
-  ang:RotateAroundAxis( ang:Up(), 0 )
-
-  ang:RotateAroundAxis( ang:Forward() * -1, -90 )
+  ang:RotateAroundAxis( ang:Up(), 270 )
 
   hook.Add( "PostDrawOpaqueRenderables", "PostDrawOpaqueRenderables::ATMOpenMenu", function()
 
@@ -620,13 +614,10 @@ net.Receive("ATM::ErrorMSG::2d3d",function(_,ply)
 
   local pos = ent:GetPos() + ent:GetUp() * 6.5 + ent:GetForward() * 35 + ent:GetRight() * -35
   local ang = ent:GetAngles()
-  local ang = Angle(0,ang.y + 90,0)
 
-  ang:RotateAroundAxis( ang:Up(), 0 )
+  ang:RotateAroundAxis( ang:Up(), 270 )
 
-  ang:RotateAroundAxis( ang:Forward() * -1, -90 )
-
-  hook.Add( "PostDrawOpaqueRenderables", "PostDrawOpaqueRenderables::ATMOpenMenu2", function()
+  hook.Add( "PostDrawOpaqueRenderables", "PostDrawOpaqueRenderables::ATMOpenMenu" .. math.random(0,99999), function()
 
     vgui.Start3D2D( pos, ang, 0.1 )
 
@@ -636,7 +627,7 @@ net.Receive("ATM::ErrorMSG::2d3d",function(_,ply)
 
   end)
 
-  timer.Simple(5,function()
+--[[  timer.Simple(5,function()
 
     if IsValid(atm_menu.BaseBox) then
 
@@ -646,7 +637,7 @@ net.Receive("ATM::ErrorMSG::2d3d",function(_,ply)
 
     end
 
-  end)
+  end)]]
 
 
 end)

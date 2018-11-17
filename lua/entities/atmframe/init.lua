@@ -46,8 +46,9 @@ net.Receive("ATM::GiveOrRetryMoney::2d3d",function(_,ply)
 
 	local bool = net.ReadBool()
 	local money = net.ReadFloat()
+	local ent = net.ReadEntity()
 
-	if money < 0 or #tostring(money) > 8 or not IsValid(net.ReadEntity()) then return end
+	if money < 0 or #tostring(money) > 8 or not IsValid(ent) then return end
 	if not IsValid(ply) then return end
 
 	if bool then
@@ -58,14 +59,14 @@ net.Receive("ATM::GiveOrRetryMoney::2d3d",function(_,ply)
 			ply:setDarkRPVar("money", ply:getDarkRPVar("money") + money)
 
 			net.Start("ATM::ErrorMSG::2d3d")
-			net.WriteEntity(net.ReadEntity())
-			net.WriteString("Argent Retirer")
+			net.WriteEntity(ent)
+			net.WriteString("Argent Retiré")
 			net.Send(ply)
 
 		else
 
 			net.Start("ATM::ErrorMSG::2d3d")
-			net.WriteEntity(net.ReadEntity())
+			net.WriteEntity(ent)
 			net.WriteString("Transfert Impossible")
 			net.Send(ply)
 
@@ -79,14 +80,14 @@ net.Receive("ATM::GiveOrRetryMoney::2d3d",function(_,ply)
 			ply:setDarkRPVar("money", ply:getDarkRPVar("money") - money)
 
 			net.Start("ATM::ErrorMSG::2d3d")
-			net.WriteEntity(net.ReadEntity())
-			net.WriteString("Argent Déposer")
+			net.WriteEntity(ent)
+			net.WriteString("Argent Déposé")
 			net.Send(ply)
 
 		else
 
 			net.Start("ATM::ErrorMSG::2d3d")
-			net.WriteEntity(net.ReadEntity())
+			net.WriteEntity(ent)
 			net.WriteString("Dépot Impossible")
 			net.Send(ply)
 
